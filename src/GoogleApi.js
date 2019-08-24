@@ -27,9 +27,14 @@ class GoogleApi extends Component {
 
   renderOauthButton = () => {
     const userSignedIn =  this.props.isSignedIn;
+    // if(userSignedIn === null){
+    //   return '';
+    // }
     const googleSignout = <button onClick={this.signOutUserofGoogle} className='ui red google button'> <i className='google icon'/> Sign Out  </button>;
     const googleSignin = <button onClick={this.signInUsertoGoogle} className='ui blue google button'> <i className='google icon' /> Sign In with Google</button>;
-    return userSignedIn ? googleSignout : googleSignin;
+    // return userSignedIn ? googleSignout : googleSignin;
+    // Then below is to check if null return empty string, or if some value then return corresponding
+    return userSignedIn === null ? '' : userSignedIn ? googleSignout : googleSignin;
   };
 
   signInOrSignOut = (isSignedIn) => {
