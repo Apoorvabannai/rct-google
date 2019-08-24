@@ -3,7 +3,6 @@ import { signIn, signOut } from './actions';
 import { connect } from 'react-redux';
 
 class GoogleApi extends Component {
-  state= {isUserSignedIn: null};
 
   componentDidMount(){
     window.gapi.load('client:auth2', () => {
@@ -12,10 +11,8 @@ class GoogleApi extends Component {
         scope: 'email'
       }).then(() => {
         this.auth = window.gapi.auth2.getAuthInstance();
-        this.setState({
-          isUserSignedIn: this.auth.isSignedIn.get()
-        });
-        this.auth.isSignedIn.listen(this.signInOutText);
+        this.signInOrSignOut(this.auth.isSignedIn.get());
+        this.auth.isSignedIn.listen(this.signInOrSignOut);
       })
     });
   };
@@ -28,22 +25,21 @@ class GoogleApi extends Component {
     return this.auth.signIn();
   };
 
-  userSignedIn = () => {
-    const userSignedIn =  this.state.isUserSignedIn;
+  renderOauthButton = () => {
+    const userSignedIn =  this.props.isSignedIn;
     const googleSignout = <button onClick={this.signOutUserofGoogle} className='ui red google button'> <i className='google icon'/> Sign Out  </button>;
     const googleSignin = <button onClick={this.signInUsertoGoogle} className='ui blue google button'> <i className='google icon' /> Sign In with Google</button>;
     return userSignedIn ? googleSignout : googleSignin;
   };
 
-  signInOutText = (isSignedIn) => {
-    this.setState({ isUserSignedIn: this.auth.isSignedIn.get()});
+  signInOrSignOut = (isSignedIn) => {
+    return isSignedIn ?  this.props.signIn() : this.props.signOut()  
   };
 
   render(){
-    console.log('this.propsthis.props', this.props);
     return(
       <div>
-        {this.userSignedIn()}
+        {this.renderOauthButton()}
       </div>
     );
   };
@@ -51,12 +47,8 @@ class GoogleApi extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    state: state
+    isSignedIn: state.authState.isSignedIn
   }
 };
 
 export default connect(mapStateToProps, { signIn, signOut })(GoogleApi);
-
-// export {
-//   connect(mapStateToProps)(GoogleApi) as default
-// }
