@@ -39,7 +39,8 @@ class GoogleApi extends Component {
   };
 
   signInOrSignOut = (isSignedIn) => {
-    return isSignedIn ?  this.props.signIn() : this.props.signOut()  
+    // this.auth.currentUser.get().getBasicProfile().getEmail() --> For Email.
+    return isSignedIn ?  this.props.signIn(this.auth.currentUser.get().getId()) : this.props.signOut()  
   };
 
   render(){
