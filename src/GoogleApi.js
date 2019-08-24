@@ -33,6 +33,7 @@ class GoogleApi extends Component {
     const googleSignout = <button onClick={this.signOutUserofGoogle} className='ui red google button'> <i className='google icon'/> Sign Out  </button>;
     const googleSignin = <button onClick={this.signInUsertoGoogle} className='ui blue google button'> <i className='google icon' /> Sign In with Google</button>;
     // return userSignedIn ? googleSignout : googleSignin;
+    // Nesting terinary
     // Then below is to check if null return empty string, or if some value then return corresponding
     return userSignedIn === null ? '' : userSignedIn ? googleSignout : googleSignin;
   };
