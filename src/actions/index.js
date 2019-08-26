@@ -1,7 +1,13 @@
 import streams from '../apis/streams';
-import { dispatch } from 'react-redux';
-
-import { SIGN_IN, SIGN_OUT, CREATE_STREAM} from './actionsTypes';
+import { 
+  SIGN_IN,
+  SIGN_OUT,
+  CREATE_STREAM,
+  FETCH_STREAMS,
+  FETCH_STREAM,
+  DELETE_STREAM,
+  EDIT_STREAM
+} from './actionsTypes';
 
 export const signIn = (userId) => {
   return {
@@ -19,6 +25,26 @@ export const signOut = () => {
 };
 
 export const createStream = (formValues) => async (dispatch) => {
-  const response = await streams.post('streams', formValues);
+  const response = await streams.post('/streams', formValues);
   dispatch({ type: CREATE_STREAM, payload: response.data});
-}
+};
+
+export const fetStreams = () => async (dispatch) => {
+  const response = await streams.get('/streams');
+  dispatch({ type: FETCH_STREAMS, payload: response.data});
+};
+
+export const fetchStream = (streamId) => async dispatch => {
+  const response = await streams.get(`/streams/${streamId}`);
+  dispatch({ type: FETCH_STREAM, payload: response.data});
+};
+
+export const editStream = (streamId, formValues) => async (dispatch) => {
+  const response = streams.put(`/streams/${streamId}`, formValues);
+  dispatch({ type: EDIT_STREAM, payload: response.data });
+};
+
+export const deleteStream = (streamId) => async (dispatch) => {
+  await streams.delete(`/streams/${streamId}`);
+  dispatch({ type: DELETE_STREAM, payload: streamId});
+};
