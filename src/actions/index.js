@@ -1,4 +1,4 @@
-import {SIGN_IN, SIGN_OUT} from './actionsTypes';
+import { SIGN_IN, SIGN_OUT, CREATE_STREAM} from './actionsTypes';
 
 export const signIn = (userId) => {
   return {
@@ -14,3 +14,12 @@ export const signOut = () => {
     type: SIGN_OUT,
   }
 };
+
+export const createStream = (data) => {
+  return {
+    type: CREATE_STREAM,
+    payload: {
+      data: null
+    }
+  }
+}
