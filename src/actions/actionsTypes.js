@@ -1,7 +1,9 @@
 const SIGN_IN = 'SIGN_IN';
 const SIGN_OUT = 'SIGN_OUT';
+const CREATE_STREAM = 'CREATE_STREAM';
 
 export  {
   SIGN_IN,
-  SIGN_OUT
+  SIGN_OUT,
+  CREATE_STREAM
 }
