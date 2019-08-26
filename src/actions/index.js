@@ -1,3 +1,6 @@
+import streams from '../apis/streams';
+import { dispatch } from 'react-redux';
+
 import { SIGN_IN, SIGN_OUT, CREATE_STREAM} from './actionsTypes';
 
 export const signIn = (userId) => {
@@ -15,11 +18,7 @@ export const signOut = () => {
   }
 };
 
-export const createStream = (data) => {
-  return {
-    type: CREATE_STREAM,
-    payload: {
-      data: null
-    }
-  }
+export const createStream = (formValues) => async (dispatch) => {
+  const response = await streams.post('streams', formValues);
+  dispatch({ type: CREATE_STREAM, payload: response.data});
 }
